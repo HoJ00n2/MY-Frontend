@@ -76,6 +76,38 @@ jobs:
     needs: build
     runs-on: [ self-hosted, deploy-my-frontend ]
     steps:
-      - name: Deploy to Production
+      - name: Get Github Actions IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+        
+      - name: Configure AWS IAM Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Add Github Actions IP to Security Group
         run: |
-          echo "ready for deploy"
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+    
+      - name: Deploy to Production
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ec2-user
+          key: ${{ secrets.PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            pwd
+            cd /home/ec2-user/my/vue-frontend
+            cp -r /home/ec2-user/my/actions-frontend-hj/dist/* ./html/
+
+            docker image prune -f
+            docker logout
+
+            docker-compose up -d
+
+      - name: Remove Github Actions IP From Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
