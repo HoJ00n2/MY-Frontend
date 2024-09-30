@@ -78,8 +78,10 @@ jobs:
     runs-on: [ self-hosted, deploy-my-frontend ]
     steps:
       - name: Get Github Actions IP
-        id: ip
-        uses: haythem/public-ip@v1.2
+        id: publicip
+        run: |
+          response=$(curl -s canhazip.com)
+          echo "ip=$response" >> "$GITHUB_OUTPUT"
         
       - name: Configure AWS IAM Credentials
         uses: aws-actions/configure-aws-credentials@v1
