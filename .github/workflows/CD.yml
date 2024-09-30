@@ -3,7 +3,6 @@ name: CD (Continuous Deploy)
 on:
   repository_dispatch:
     types: [FRONTEND_TEST_FINISH_TRIGGER]
-
 jobs:
   build:
     name: build-app
