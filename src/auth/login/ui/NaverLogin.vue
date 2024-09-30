@@ -21,11 +21,11 @@ export default {
 <style scoped>
 .naver-login-btn {
     margin: 10px 0;
-    background-image: url("@/assets/images/fixed/login/naverLogin.png");
+    background-image: url("@/assets/images/fixed/login/naver_login_round.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    height: 50px;
-    width: 200px;
+    height: 80px;
+    width: 80px;
 }
 </style>

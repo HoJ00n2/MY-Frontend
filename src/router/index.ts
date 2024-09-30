@@ -5,15 +5,17 @@ import GoogleAuthenticationRoutes from '@/googleAuthentication/router/GoogleAuth
 import SurveyRoutes from '@/survey/router/SurveyRoutes'
 import HomeRoutes from '@/home/router/HomeRoutes'
 import NaverAuthenticationRoutes from '@/naverAuthentication/router/NaverAuthenticationRoutes'
+import LoginRoutes from '@/auth/login/router/LoginRoutes'
 
 
 
 const routes: Array<RouteRecordRaw> = [
   ...HomeRoutes,
-  // ...DashBoardRoutes,
+  ...LoginRoutes,
   ...KakaoAuthenticationRoutes,
   ...GoogleAuthenticationRoutes,
   ...NaverAuthenticationRoutes,
+  // ...DashBoardRoutes,
   ...SurveyRoutes,
 ]
 
