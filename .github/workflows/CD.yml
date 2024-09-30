@@ -100,7 +100,7 @@ jobs:
           script: |
             pwd
             cd /home/ec2-user/my/vue-frontend
-            cp -r /home/ec2-user/my/actions-frontend-hj/dist/* ./html/
+            cp -r /home/ec2-user/my/vue-frontend/dist/* ./html/
 
             docker image prune -f
             docker logout
