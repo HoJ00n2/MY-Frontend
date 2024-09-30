@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   nginx:
-    image: "nginx:lates"
+    image: "nginx:latest"
     container_name: frontend-deploy-nginx
     restart: unless-stopped
     volumes:
